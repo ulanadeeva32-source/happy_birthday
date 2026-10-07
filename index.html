@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>С Днём рождения, Лилия Ильдаровна!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="paused">
+
+  <!-- Анимированный фон -->
+  <div class="bg-blobs">
+    <span class="blob b1"></span>
+    <span class="blob b2"></span>
+    <span class="blob b3"></span>
+  </div>
+
+  <!-- Гирлянда флажков -->
+  <div class="bunting" id="bunting"></div>
+
+  <!-- Летающие эмодзи -->
+  <div class="floaters" id="floaters"></div>
+
+  <!-- Холст для салюта, сердечек и искр -->
+  <canvas id="fx"></canvas>
+
+  <!-- Кнопка старта: пока не нажата, всё стоит на паузе -->
+  <button class="start-btn" id="startBtn" type="button" aria-label="Запустить">
+    <span class="start-icon">▶</span>
+  </button>
+
+  <!-- Заставка с Артуром -->
+  <div class="intro" id="intro">
+    <p class="intro-hint">Нажмите на Артура 😉</p>
+    <button class="skip" id="skip">Пропустить ▸</button>
+
+    <div class="bubble" id="bubble">
+      <p id="bubbleText"></p>
+      <div class="choices" id="choices"></div>
+      <p class="nudge" id="nudge">Ну же, выбирайте, я весь внимание! 😄</p>
+    </div>
+
+    <div class="hero" id="hero">
+      <div class="hero-jump" id="heroJump">
+        <div class="hero-flip" id="heroFlip">
+          <div class="hero-svg" id="heroSvg">
+            <svg viewBox="-5 0 220 270" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <radialGradient id="bodyG" cx="38%" cy="28%" r="85%">
+                  <stop offset="0" stop-color="#ffe9a8"/>
+                  <stop offset="1" stop-color="#ff9f43"/>
+                </radialGradient>
+                <linearGradient id="hatG" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#b197fc"/>
+                  <stop offset="1" stop-color="#6741d9"/>
+                </linearGradient>
+              </defs>
+
+              <ellipse cx="100" cy="263" rx="54" ry="8" fill="rgba(0,0,0,.2)"/>
+
+              <g class="bob">
+                <!-- ноги -->
+                <g class="leg leg-l">
+                  <rect x="72" y="205" width="20" height="44" rx="10" fill="#e8590c"/>
+                  <ellipse cx="78" cy="252" rx="18" ry="9" fill="#c2410c"/>
+                </g>
+                <g class="leg leg-r">
+                  <rect x="108" y="205" width="20" height="44" rx="10" fill="#e8590c"/>
+                  <ellipse cx="122" cy="252" rx="18" ry="9" fill="#c2410c"/>
+                </g>
+
+                <!-- левая рука (машет) -->
+                <g class="arm arm-l">
+                  <line x1="36" y1="152" x2="20" y2="196" stroke="#ffb347" stroke-width="15" stroke-linecap="round"/>
+                  <circle cx="19" cy="198" r="10" fill="#ffd8a8"/>
+                </g>
+
+                <!-- правая рука с шариком -->
+                <g class="arm arm-r">
+                  <g class="balloon">
+                    <line x1="181" y1="196" x2="190" y2="84" stroke="#fff" stroke-width="2"/>
+                    <ellipse cx="190" cy="58" rx="20" ry="26" fill="#ff6b6b"/>
+                    <ellipse cx="183" cy="48" rx="5" ry="9" fill="rgba(255,255,255,.55)"/>
+                    <polygon points="190,84 185,92 195,92" fill="#e03131"/>
+                  </g>
+                  <line x1="164" y1="152" x2="180" y2="194" stroke="#ffb347" stroke-width="15" stroke-linecap="round"/>
+                  <circle cx="181" cy="196" r="10" fill="#ffd8a8"/>
+                </g>
+
+                <!-- Артур: вырезанное лицо крупным планом -->
+                <g class="face">
+                  <image href="img/arthur.png" x="41" y="58" width="118" height="150" preserveAspectRatio="xMidYMid meet"/>
+                </g>
+
+                <!-- праздничный колпак -->
+                <g class="hat">
+                  <polygon points="100,0 76,62 124,62" fill="url(#hatG)"/>
+                  <polygon points="85,28 115,28 119,38 81,38" fill="rgba(255,255,255,.35)"/>
+                  <ellipse cx="100" cy="62" rx="28" ry="5" fill="#5f3dc4"/>
+                  <circle cx="100" cy="0" r="7" fill="#ffd43b"/>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap hidden">
+    <section class="card" id="card">
+      <div class="badge">🎂 7 октября · День рождения 🎂</div>
+
+      <!-- Торт с мерцающими свечами -->
+      <div class="cake" aria-hidden="true">
+        <div class="candles"><i></i><i></i><i></i></div>
+        <div class="layer l1"></div>
+        <div class="layer l2"></div>
+        <div class="layer l3"></div>
+        <div class="plate"></div>
+      </div>
+
+      <h1 class="title">
+        <span>С</span> <span>Днём</span> <span>рождения!</span>
+      </h1>
+
+      <h2 class="name">Лилия Ильдаровна</h2>
+
+      <p class="subtitle">Вас поздравляет группа <strong>346-П</strong> 💛</p>
+
+      <div class="wish-box">
+        <p id="wishText"></p>
+      </div>
+      <div class="dots" id="dots"></div>
+
+      <div class="open-wrap">
+        <button class="btn" id="btnOpen">🎁 Открыть поздравление</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Подарок и поздравления от студентов -->
+  <div class="overlay" id="overlay">
+    <button class="close" id="btnClose" aria-label="Закрыть">✕</button>
+
+    <!-- Шаг 1: большая коробка -->
+    <div class="stage" id="giftStage">
+      <p class="hint">Нажмите на подарок 🎀</p>
+      <div class="gift" id="gift">
+        <div class="gift-lid"><span class="bow"></span></div>
+        <div class="gift-body"></div>
+      </div>
+    </div>
+
+    <!-- Шаг 2: маленькие коробочки от каждого студента -->
+    <div class="stage hidden" id="boxesStage">
+      <h3 class="boxes-title">Поздравления от группы 346-П 💛</h3>
+      <p class="hint" id="boxesHint">Нажимайте на коробочки · открыто <b id="openedCount">0</b> из <b id="totalCount">23</b></p>
+      <div class="boxes" id="boxes"></div>
+    </div>
+
+    <!-- Кнопка над Артуром: переход к основному подарку -->
+    <button class="main-gift-btn" id="btnMain" hidden>🎁 Перейти к основному подарку</button>
+
+    <!-- Финальная надпись после слов Артура -->
+    <div class="final-text" id="finalText" hidden>С Днём рождения!</div>
+
+    <!-- Артур снова выглядывает и говорит про основной подарок -->
+    <div class="hero arthur-pop" id="arthurPop" aria-live="polite">
+      <div class="arthur-bubble"><p id="arthurText"></p></div>
+      <div class="hero-jump" id="arthurJump"><div class="hero-svg" id="arthurSvg"></div></div>
+    </div>
+
+    <!-- Шаг 3: письмо с печатающимся текстом -->
+    <div class="letter-wrap" id="letterWrap">
+      <div class="letter">
+        <button class="close-letter" id="btnLetterClose" aria-label="Закрыть письмо">✕</button>
+        <h3 id="letterTitle"></h3>
+        <img class="letter-photo" id="letterPhoto" alt="" hidden>
+        <p id="typed"></p>
+        <div class="sign" id="letterSign"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="audio.js"></script>
+  <script src="greetings.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
